@@ -1,0 +1,132 @@
+{{> header }}
+{{> left }}
+<!-- Main Content -->
+		<div class="page-wrapper">	<!-- select2 CSS -->
+			 	<div class="container-fluid">
+				
+				<!-- Title -->
+				<div class="row heading-bg">
+					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+					  <!-- <h5 class="txt-dark">Login Users</h5> -->
+					</div>
+					<!-- Breadcrumb -->
+					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+					  <ol class="breadcrumb">
+						<li><a href="/">Dashboard</a></li>
+						<li><a href="/banner"><span>Banner</span></a></li>
+						<li class="active"><span>List</span></li>
+					  </ol>
+					</div>
+					<!-- /Breadcrumb -->
+				</div>
+				<!-- /Title -->
+				{{#if errors}} {{#each errors}}
+						<div class="alert alert-danger" id="errmsg">{{msg}}</div>
+					{{/each}} {{/if}} 
+					
+					{{#if success_msg}}
+						<div class="alert alert-success" id="sucmsg">{{success_msg}}</div>
+					{{/if}} 
+					{{#if error_msg}}
+						<div class="alert alert-danger" id="sucmsg">{{error_msg}}</div>
+					{{/if}}
+				<!-- Row -->
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="panel panel-default card-view">
+							<div class="panel-heading">
+								<div class="pull-left">
+									<h6 class="panel-title txt-dark">Banner</h6>
+								</div>
+								<div class="right" style="float:right">
+									<a href="/banner" class="btn btn-info btn-anim" id='viewbtn' ><i class="fa fa-eye"></i><span class="btn-text">View List</span></a>
+								</div>
+								<div class="clearfix"></div>
+							</div>
+							<div class="clearfix"></div>
+								<div class="row searchfrm">
+									<div class="col-md-12">
+																		</div>
+								</div>
+																					<div class="panel-wrapper collapse in">
+								<div class="panel-body">
+									<div class="contact-list">
+										<div class="row">
+									<aside class="col-lg-10 col-md-4 pr-0">	
+									<div class="table-wrap" id="customer_list">
+										<div class="panel pl-10">
+									
+						<!-- Row -->
+					<div class="panel-body">
+						<div class="form-wrap">
+							<h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-account mr-10"></i>Banner's Info</h6>
+							<hr class="light-grey-hr"/>
+							<form method="post"  data-toggle="validator" role="form" action="/banner/updatebanner" enctype="multipart/form-data" >
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label mb-10" for="exampleInputEmail_2">Title</label>
+											<div class="input-group">
+												<div class="input-group-addon"><i class="icon-user"></i></div>
+												<input type="text" class="form-control" name="title" id="title" placeholder="Brand Name" required value="{{data.data.title}}">
+												<input type="hidden" class="form-control" name="_id" id="_id" value="{{data.data._id}}">
+
+											</div>
+										</div>
+									</div>
+								    <div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label mb-10" for="exampleInputEmail_2">Image</label>
+											<div class="input-group">
+												<div class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></div>
+												<input type="file" class="form-control" name="image" id="image" >
+											</div>
+										</div>
+									</div>
+								</div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+											<label class="control-label mb-10" for="exampleInputEmail_2">Description</label>
+											<div class="input-group">
+												<div class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></div>
+												<textarea class="form-control" name="description" id="description">{{data.data.description}}</textarea>
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                	<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label mb-10" for="exampleInputEmail_2">Status</label>
+											<div class="input-group">
+												<div class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></div>
+												<select name="status" id="status" class="form-control">
+													<option value="Active"{{#if_equal data.data.status 'Active' }} selected {{/if_equal}} >Active</option>
+													<option value="Inactive"{{#if_equal data.data.status 'Inactive' }} selected {{/if_equal}} >Inactive</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									 
+								</div>
+								<div class="form-group text-center">
+									<button type="submit" class="btn btn-success  btn-rounded">Save</button>
+								</div>
+							</form>
+						</div>
+				</div>
+			</div>
+
+			<!-- /Row --> 
+				</div>
+			</div>
+		</div>	
+	</div>
+</div>
+<!-- /Row -->
+</aside>
+</div>
+</div>
+
+        {{> footer }}

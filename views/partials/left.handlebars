@@ -1,0 +1,114 @@
+<!-- Left Sidebar Menu -->
+<div class="fixed-sidebar-left">
+	<ul class="nav navbar-nav side-nav nicescroll-bar">
+		<li class="navigation-header">
+			<span>Main</span>
+			<i class="zmdi zmdi-more"></i>
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "home" }} class="active" {{/if_equal}} href="javascript:void(0);" data-toggle="collapse" data-target="#dashboard_dr">
+				<div class="pull-left">
+					<i class="zmdi zmdi-landscape mr-20"></i>
+					<span class="right-nav-text">Dashboard</span>
+				</div>
+				<div class="pull-right">
+					<i class="zmdi zmdi-caret-down"></i>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+			{{!--
+			<ul id="dashboard_dr" class="collapse collapse-level-1">
+				<li>
+					<a class="active-page" href="index.html">Analytical</a>
+				</li>
+				<li>
+					<a href="index2.html">Demographic</a>
+				</li>
+				<li>
+					<a href="index3.html">Project</a>
+				</li>
+				<li>
+					<a href="index4.html">Hospital</a>
+				</li>
+				<li>
+					<a href="index5.html">HRM</a>
+				</li>
+				<li>
+					<a href="index6.html">Real Estate</a>
+				</li>
+				<li>
+					<a href="profile.html">profile</a>
+				</li>
+			</ul> --}}
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "users" }} class="active" {{/if_equal}} href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr">
+				<div class="pull-left">
+					<i class="fa fa-user mr-20"></i>
+					<span class="right-nav-text">Users</span>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+			<ul id="ecom_dr" class="collapse collapse-level-1">
+				<li>
+					<a href="/users">Users</a>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "banner" }} class="active" {{/if_equal}} href="/banner">
+				<div class="pull-left">
+					<i class="zmdi zmdi-image mr-20"></i>
+					<span class="right-nav-text">Banners</span>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "brand" }} class="active" {{/if_equal}} href="/brand">
+				<div class="pull-left">
+					<i class="zmdi zmdi-apps mr-20"></i>
+					<span class="right-nav-text">Brand</span>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "promotion" }} class="active" {{/if_equal}} href="/promotion">
+				<div class="pull-left">
+					<i class="zmdi zmdi-apps mr-20"></i>
+					<span class="right-nav-text">Promotion</span>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "category" }} class="active" {{/if_equal}} href="/category">
+				<div class="pull-left">
+					<i class="fa fa-list-alt mr-20"></i>
+					<span class="right-nav-text">Category</span>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "customer" }} class="active" {{/if_equal}} href="/customers">
+				<div class="pull-left">
+					<i class="fa fa-user mr-20"></i>
+					<span class="right-nav-text">Customers</span>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+		</li>
+		<li>
+			<a {{#if_equal data.pagename "product" }} class="active" {{/if_equal}} href="/product">
+				<div class="pull-left">
+					<i class="fa fa-list-alt mr-20"></i>
+					<span class="right-nav-text">Product</span>
+				</div>
+				<div class="clearfix"></div>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- /Left Sidebar Menu -->

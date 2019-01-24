@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>NodeJs App</title>
+	<meta name="description" content="Node Application" />
+	<meta name="keywords" content="Node Application" />
+	<meta name="author" content="Node Application" />
+
+	<!-- Favicon -->
+	{{!--
+	<link rel="shortcut icon" href="favicon.ico"> --}} {{!--
+	<link rel="icon" href="favicon.ico" type="image/x-icon"> --}}
+	<!-- vector map CSS -->
+	<!-- Custom Fonts -->
+	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="/css/jasny-bootstrap.min.css" rel="stylesheet" type="text/css" /> {{!--
+	<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> --}}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="/js/dropify/dist/css/dropify.min.css" rel="stylesheet" type="text/css"/>
+	<!-- Bootstrap Datetimepicker CSS -->
+	<link href="/css/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css"/>
+
+	<!-- Custom CSS -->
+	<link href="/css/style.css" rel="stylesheet" type="text/css">
+	<link href="/css/custom.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+	<!--Preloader-->
+	{{!--
+	<div class="preloader-it">
+		<div class="la-anim-1"></div>
+	</div> --}}
+	<!--/Preloader-->
+
+	<div class="wrapper  pa-0 loginpg">
+
+		<!-- Main Content -->
+		{{{body}}}
+		<!-- /Main Content -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- JavaScript -->
+
+	<!-- jQuery -->
+	<script src="/js/jquery.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="/js/bootstrap.min.js"></script>
+
+	<!-- Bootstrap Form Validation -->
+	<script src="/js/bootstrap-validator/dist/validator.min.js"></script>
+
+	<!-- Slimscroll JavaScript -->
+	<script src="/js/jquery.slimscroll.js"></script>
+
+	<script src="/js/dropdown-bootstrap-extended.js"></script>
+
+	<script src="/js/jasny-bootstrap.min.js"></script> 
+	{{#if_not_equal data.pagename 'login' }}
+	<!-- Init JavaScript -->
+	{{#if_equal data.pagename 'product' }}
+	<script src="/js/dropify/dist/js/dropify.min.js"></script>
+	<!-- Moment JavaScript -->
+	<script src="/js/form-file-upload-data.js"></script>
+	<script src="/js/bootstrap-wysuhtml5-data.js"></script>
+	<script src="/js/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.js"></script> 
+	{{/if_equal}}
+	<script type="text/javascript" src="/js/moment/min/moment-with-locales.min.js"></script>
+	<script src="/js/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="/js/init.js"></script>
+	{{/if_not_equal}}
+</body>
+
+</html>

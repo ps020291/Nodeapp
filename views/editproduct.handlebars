@@ -1,0 +1,669 @@
+{{> header }} {{> left }}
+<!-- Bootstrap Datetimepicker CSS -->
+/> {{!--
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>dist/css/dd.css"> --}}
+<!--alerts CSS -->
+{{!--
+<link href="<?php echo base_url() ?>bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css"> --}}
+<!-- vector map CSS -->
+{{!--
+<link href="<?php echo base_url() ?>bower_components/jquery-wizard.js/css/wizard.css" rel="stylesheet" type="text/css" /> --}}
+<!-- jquery-steps css -->
+{{!--
+<link rel="stylesheet" href="<?php echo base_url() ?>bower_components/jquery.steps/demo/css/jquery.steps.css"> --}}
+<!-- select2 CSS -->
+{{!--
+<link href="<?php echo base_url() ?>bower_components/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" /> --}}
+<!-- bootstrap-select CSS -->
+{{!--
+<link href="<?php echo base_url() ?>bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet"
+    type="text/css" /> --}}
+<!-- Custom CSS -->
+{{!--
+<link href="<?php echo base_url() ?>dist/css/style.css" rel="stylesheet" type="text/css"> --}}
+
+<!-- Bootstrap Wysihtml5 css -->
+<link rel="stylesheet" href="../../js/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.css" />
+<style type="text/css">
+
+    .description ul li{
+        float: left !important;
+    }
+
+    .borderRadius {
+        border-radius: 0px !important;
+    }
+
+    .dd .ddTitle {
+        background: none;
+        height: 41px;
+    }
+
+    .dd .ddTitle .ddTitleText {
+        padding: 7px 12px !important;
+    }
+
+    .dd .ddChild li img {
+        width: 50px;
+    }
+
+    .dd .ddTitle .ddTitleText img {
+        width: 40px;
+    }
+
+    .tab-pane {
+        border: 1px solid #ddd;
+    }
+
+    .fade.in {
+        display: block;
+    }
+
+    .fade {
+        display: none;
+    }
+
+    #myTabs_10 {
+        border-right: 1px solid #8BC34A;
+    }
+
+    .white_14font {
+        color: #fff !important;
+        font-size: 14px !important;
+    }
+
+    .select2-container .select2-selection--multiple .select2-selection__rendered {
+        height: 40px;
+        overflow-y: scroll;
+    }
+
+    .active1 {
+        border-color: #5ee0a9;
+        border: 2px solid #5ee0a9;
+
+    }
+
+    .active2 {
+        float: right;
+        top: -20px;
+    }
+
+    /*
+  #myTabs_10  li.active a{
+    background: none !important; 
+    color: #000;
+    border: 1px solid #8BC34A;
+    border-right-color: transparent;
+  }
+   
+   
+   #myTabs_10  li.active{
+    margin-right: -1px;
+  }
+  #myTabs_10  li{
+    margin-right: 0px;
+  }
+   
+  #myTabs_10 > li > a{
+    border : 1px solid transparent;
+
+  }*/
+</style>
+<!-- Main Content -->
+<div class="page-wrapper">
+    <!-- select2 CSS -->
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <div class="row heading-bg">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <h5 class="txt-dark">Products</h5>
+            </div>
+            <!-- Breadcrumb -->
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/products">
+                            <span>Products</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <span>Add</span>
+                    </li>
+                </ol>
+            </div>
+            <!-- /Breadcrumb -->
+        </div>
+        <!-- /Title -->
+        <!-- Row -->
+        <div class="panel panel-default card-view">
+            <div class="panel-heading">
+                <div class="pull-left">
+                    <h6 class="panel-title txt-dark">Product Information</h6>
+                </div>
+                <div class="pull-right">
+                    <h6 class="panel-title txt-dark">
+                        <a href="/product" class="btn btn-warning pull-right white_14font">
+                            <i class=" glyphicon glyphicon-list white_14font"></i>&nbsp;View List</a>
+                    </h6>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-wrapper collapse in">
+                <div class="panel-body">
+                    <div class="pills-struct vertical-pills mt-40">
+                        <ul role="tablist" class="nav nav-pills ver-nav-pills" id="myTabs_10">
+                            <li class="active" role="presentation">
+                                <a aria-expanded="true" data-toggle="tab" role="tab" id="general_tab_10" href="#general_10">General Information</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a data-toggle="tab" id="prices_tab_10" role="tab" href="#prices_10" aria-expanded="false">Description</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a data-toggle="tab" id="meta_tab_10" role="tab" href="#meta_10" aria-expanded="false">Meta Information</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a data-toggle="tab" id="categories_tab_10" role="tab" href="#categories_10" aria-expanded="false">Categories</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a data-toggle="tab" id="image_tab_10" role="tab" href="#image_10" aria-expanded="false">Images</a>
+                            </li>
+                            <li role="presentation" class="">
+                                <a data-toggle="tab" id="related_tab_10" role="tab" href="#related_10" aria-expanded="false">Related Product</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent_10">
+                            <form method="post" data-toggle="validator" class="form-horizontal" role="form" action="/product/saveproduct" enctype="multipart/form-data">
+                                <div id="general_10" class="tab-pane fade pr-15 active in" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12 mt-15 mb-15 mr-15">
+                                            <div class="form-wrap">
+                                                <div class="form-body">
+                                                    <h6 class="txt-dark capitalize-font">
+                                                        <!-- <i class="zmdi zmdi-account mr-10"></i> -->General Info</h6>
+                                                    <hr class="light-grey-hr" />
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Name
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="title" value="{{data.data.title}}" id="title" class="form-control" required placeholder="Name" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">SKU
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" required class="form-control" value="{{data.data.sku}}" name="sku" id="sku" placeholder="SKU">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Brand </label>
+                                                                <div class="col-md-9">
+                                                                    <select class="form-control" name="brand_id" id="brand_id" style="height: 42px;">
+                                                                        <option value="">Select Brand</option>
+                                                                        {{#each brand}} {{#each this }} 
+                                                                        {{#if_equal _id data.data.brand_id }}
+                                                                        <option selected  value="{{_id}}">{{ name }}</option>
+                                                                        {{else}}
+                                                                        <option value="{{_id}}">{{ name }}</option>
+                                                                        {{/if_equal}}
+                                                                        {{/each}} {{/each}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Status
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <select name="status" id="status" class="form-control">
+                                                                        <option value="Active" {{#if_equal data.data.status 'Active' }} selected {{/if_equal}} >Active</option>
+                                                                        <option value="Inactive"  {{#if_equal data.data.status 'Inactive' }} selected {{/if_equal}}>Inactive</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!-- /Row -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Is Featured
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <select name="is_featured" id="is_featured" class="form-control">
+                                                                        <option value="0" {{#if_equal data.data.is_featured '0' }} selected {{/if_equal}} >No</option>
+                                                                        <option value="1" {{#if_equal data.data.is_featured '1' }} selected {{/if_equal}} >Yes</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">URL</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="url" value="{{data.data.url}}" class="form-control" placeholder="URL">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!-- /Row -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Price
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-addon">INR</div>
+                                                                        <input type="text" name="price" value="{{data.data.price}}"  id="price" class="form-control" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Offer Price</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-addon">INR</div>
+                                                                        <input type="text" name="offer_price" value="{{data.data.offer_price}}"  id="offer_price" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!-- /Row -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Shipping</label>
+                                                                <div class="col-md-9">
+                                                                    <select name="shipping" onchange="showShipping(this.value, 'shipping_charge_div')" class="form-control">
+                                                                        <option value="Free Shipping"  {{#if_equal data.data.shipping 'Free Shipping' }} selected {{/if_equal}}>Free Shipping</option>
+                                                                        <option value="Chargeable"  {{#if_equal data.data.is_featured 'Chargeable' }} selected {{/if_equal}}>Chargeable</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 hide" id="shipping_charge_div">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Shipping Charge</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <div class="input-group-addon">INR</div>
+                                                                        <input type="text" name="shipping_charge" value="{{data.data.shipping_charge}}"  class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Quantity
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="quantity" value="{{data.data.quantity}}"  id="quantity" class="form-control" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Stock Availability</label>
+                                                                <div class="col-md-9">
+                                                                    <select name="stock" id="stock" class="form-control">
+                                                                        <option value="In Stock"  {{#if_equal data.data.stock 'In Stock' }} selected {{/if_equal}}>In Stock</option>
+                                                                        <option value="Out Of Stock"  {{#if_equal data.data.is_featured 'Out Of Stock' }} selected {{/if_equal}}>Out Of Stock</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Notify Quantity Below</label>
+                                                                <div class="col-md-9">
+                                                                    <input type="text" name="notify_qty" value="{{data.data.notify_qty}}"  id="notify_qty" value="1" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Discount Applicable</label>
+                                                                <div class="col-md-9">
+                                                                    <select name="discount_status" class="form-control" onchange="showDiscount(this.value, 'discount_div')" required>
+                                                                        <option value="0"  {{#if_equal data.data.discount_status '0'}} selected {{/if_equal}} >No</option>
+                                                                        <option value="1" {{#if_equal data.data.discount_status '1'}} selected {{/if_equal}}>Yes</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div id="discount_div" style="display: none">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">Discount Type</label>
+                                                                    <div class="col-md-9">
+                                                                        <select name="discount_type" class="form-control" required>
+                                                                            <option value="Percent" {{#if_equal data.data.discount_type 'Percent'}} selected {{/if_equal}} >Percent</option>
+                                                                            <option value="Flat Rate"  {{#if_equal data.data.discount_type 'Flate Rate'}} selected {{/if_equal}} >Flat Rate</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-3">Discount</label>
+                                                                    <div class="col-md-9">
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="ti-cut"></i>
+                                                                            </div>
+                                                                            <input type="text" name="discount" value="{{data.data.discount}}" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/span-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">Allow Review</label>
+                                                                <div class="col-md-9">
+                                                                    <select class="form-control" name="review_allow" required>
+                                                                        <option value="">Select Review Allow</option>
+                                                                        <option value="0" {{#if_equal data.data.review_allow '0'}} selected {{/if_equal}}>No</option>
+                                                                        <option value="1" {{#if_equal data.data.review_allow '1'}} selected {{/if_equal}}>Yes</option>
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="prices_10" class="tab-pane fade pr-15" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12 mt-15 mb-15 mr-15">
+                                            <div class="form-wrap">
+                                                <div class="form-body">
+                                                    <h6 class="txt-dark capitalize-font">
+                                                        <!-- <i class="zmdi zmdi-account mr-10"></i> -->Description</h6>
+                                                    <hr class="light-grey-hr" />
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-1">Description
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-11 description">
+                                                                    <textarea class="textarea_editor form-control" name="long_description" id="long_description" rows="15" placeholder="Enter text ..."
+                                                                        required>{{data.data.long_description}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-1">Short Description
+                                                                    <span class="text-danger">*</span>
+                                                                </label>
+                                                                <div class="col-md-11 description">
+                                                                    <textarea class="textarea_editor form-control" name="short_description" id="short_description" rows="15" placeholder="Enter text ..."
+                                                                        required>{{data.data.short_description}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div id="meta_10" class="tab-pane fade pr-15" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12 mt-15 mb-15 mr-15">
+                                            <div class="form-wrap">
+                                                <div class="form-body">
+                                                    <h6 class="txt-dark capitalize-font">
+                                                        <!-- <i class="zmdi zmdi-account mr-10"></i> -->Meta Information</h6>
+                                                    <hr class="light-grey-hr" />
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-1">Meta Title</label>
+                                                                <div class="col-md-11 ">
+                                                                    <input type="text" name="meta_title" value="{{data.data.meta_title}}" id="meta_title" class="form-control" placeholder="Meta Title">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-1">Meta Keyword</label>
+                                                                <div class="col-md-11 description">
+                                                                    <textarea class="textarea_editor form-control" name="meta_keyword" id="meta_keyword" rows="15" placeholder="Meta Keyword">{{data.data.meta_keyword}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-1">Meta Description</label>
+                                                                <div class="col-md-11 description">
+                                                                    <textarea class="textarea_editor form-control" name="meta_description" id="meta_description" rows="15" placeholder="Meta Description">{{data.data.meta_description}}</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="image_10" class="tab-pane fade pr-15" role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12 mt-15 mb-15 mr-15">
+                                            <div class="form-wrap">
+                                                <div class="form-body">
+                                                    <h6 class="txt-dark capitalize-font">Upload Product Images</h6>
+                                                    <hr class="light-grey-hr" />
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-xs-12">
+                                                            <div class="panel panel-default card-view">
+                                                                <div class="panel-heading">
+                                                                    <div class="pull-left">
+                                                                        <h6 class="panel-title txt-dark">File Upload (max file size)</h6>
+                                                                    </div>
+                                                                    <div class="clearfix"></div>
+                                                                </div>
+                                                                <div class="panel-wrapper collapse in">
+                                                                    <div class="panel-body">
+                                                                        <p class="text-muted">You can add a max file size by
+                                                                            <code>data-max-file-size</code>.</p>
+                                                                        <div class="mt-40">
+                                                                            <input type="file" id="input-file-max-fs" name="image" multiple class="dropify" data-max-file-size="2M" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="gallery"></div>
+                                                    <div class="row" id="storeimg">
+                                                        <div class="col-md-12">
+                                                            <h6 class="txt-dark capitalize-font">
+                                                                <i class="zmdi zmdi-image mr-10"></i>Uploaded Image</h6>
+                                                            <hr class="light-grey-hr mb-10">
+                                                            <div class="row text-center text-lg-left" style="height: 400px; ">
+                                                                <div class="nicescroll-bar" id="catimagediv">
+                                                                    {{#each data.data.image}}
+                                                                    <div class="col-md-3">
+                                                                        <img src="../../images/products/{{name}}" class="img-thumbnail">
+                                                                    </div>
+                                                                    {{/each}}
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="imageid" id="imageid">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="categories_10" class="tab-pane fade pr-15 " role="tabpanel">
+                                    <div class="row">
+                                        <div class="col-md-12 mt-15 mb-15 mr-15">
+                                            <div class="form-wrap">
+                                                <div class="form-body">
+                                                    <h6 class="txt-dark capitalize-font">
+                                                        <!-- <i class="zmdi zmdi-account mr-10"></i> -->Product Category</h6>
+                                                    <hr class="light-grey-hr" />
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            {{#each category}} {{#each this }}
+                                                            <div class="col-md-3">
+                                                                <div class="checkbox checkbox-primary">
+                                                                    <input  id="checkbox{{_id}}" type="checkbox" name="category_id[]" value="{{_id}}">
+                                                                    <label for="checkbox{{_id}}"> {{name}} </label>
+                                                                </div>
+                                                            </div>
+                                                            {{/each}} {{/each}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="related_10" class="tab-pane fade pr-15" role="tabpanel">
+                                    <div class="table-wrap">
+                                        <!--<div class="table-responsive">-->
+                                        <table id="datable_1" class="table table-hover display  pb-30">
+                                            <thead>
+                                                <tr>
+                                                    <tr>
+                                                        <th>
+                                                            <div class="checkbox checkbox-success">
+                                                                <input type="checkbox" name="deleteAll">
+                                                                <label>&nbsp;</label>
+                                                            </div>
+                                                        </th>
+                                                        <th>SKU</th>
+                                                        <th>Name</th>
+                                                        <th>Is Featured</th>
+                                                        <th>Price</th>
+                                                        <th>Offer Price</th>
+                                                        <th>Quantity</th>
+                                                        <th>Stock</th>
+                                                        <th>Status</th>
+                                                    </tr>
+
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>SKU</th>
+                                                    <th>Name</th>
+                                                    <th>Is Featured</th>
+                                                    <th>Price</th>
+                                                    <th>Offer Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Stock</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody id="related_product_tbody">
+                                            </tbody>
+                                        </table>
+                                        <div id="pagination_link">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions mt-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button type="submit" class="btn btn-success btn-rounded btn-0">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6"> </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- /Row -->
+
+        <!-- /Main Content -->
+        <script type="text/javascript">
+            function showDiscount(arg, arg1) {
+                if (arg == "1") {
+                    $("#" + arg1).show();
+                } else {
+                    $("#" + arg1).hide();
+                }
+            }
+
+            function showShipping(arg, arg1) {
+                if (arg == "Chargeable") {
+                    $("#" + arg1).removeClass("hide");
+                } else {
+                    $("#" + arg1).addClass("hide");
+                }
+            }
+
+        </script> {{> footer }}
+    </div>
+</div>

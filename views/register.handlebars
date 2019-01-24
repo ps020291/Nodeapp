@@ -1,0 +1,94 @@
+<header class="sp-header">
+    <div class="sp-logo-wrap pull-left">
+        <a href="/">
+            {{!--
+            <img class="brand-img mr-10" src="../img/logo.png" alt="brand" /> --}}
+            <span class="brand-text">NodeApp</span>
+        </a>
+    </div>
+    <div class="form-group mb-0 pull-right">
+        <span class="inline-block pr-10">Don't have an account?</span>
+        <a class="inline-block btn btn-success  btn-rounded btn-outline" href="/register">Sign Up</a>
+    </div>
+    <div class="clearfix"></div>
+</header>
+<div class="page-wrapper pa-0 ma-0 auth-page">
+    <div class="container-fluid">
+        <!-- Row -->
+        <div class="table-struct full-width full-height">
+            <div class="table-cell vertical-align-middle auth-form-wrap">
+                <div class="auth-form  ml-auto mr-auto no-float">
+                    <div class="row">
+
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="mb-30">
+                                <h3 class="text-center txt-dark mb-10">Register to NodeApp Admin</h3>
+                                <h6 class="text-center nonecase-font txt-grey">Enter your details below</h6>
+                            </div>
+                            {{#if errors}} {{#each errors}}
+                            <div class="alert alert-danger" id="errmsg">{{msg}}</div>
+                            {{/each}} {{/if}} {{#if success_msg}}
+                            <div class="alert alert-success" id="sucmsg">{{success_msg}}</div>
+                            {{/if}} {{#if error_msg}}
+                            <div class="alert alert-danger" id="sucmsg">{{error_msg}}</div>
+                            {{/if}}
+                            <div class="form-wrap">
+                                <form method="post" id="loginform" action="/register/signup">
+                                    <div class="form-group">
+                                        <label class="control-label mb-10" for="exampleInputEmail_2">Name</label>
+                                        <div class="input-group" id="email_control">
+                                            <div class="input-group-addon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <input type="name" class="form-control" id="name" name="name" placeholder="Enter Name" onfocus="removeactiveClass('email', 'has-error')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-10" for="exampleInputEmail_2">Email address</label>
+                                        <div class="input-group" id="email_control">
+                                            <div class="input-group-addon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" onfocus="removeactiveClass('email', 'has-error')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-10" for="exampleInputpwd_2">Password</label>
+                                        <div class="input-group" id="password_control">
+                                            <div class="input-group-addon">
+                                                <i class="icon-lock"></i>
+                                            </div>
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" onfocus="removeactiveClass('password', 'has-error')">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label mb-10" for="exampleInputEmail_2">Mobile</label>
+                                        <div class="input-group" id="email_control">
+                                            <div class="input-group-addon">
+                                                <i class="icon-user"></i>
+                                            </div>
+                                            <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile" onfocus="removeactiveClass('email', 'has-error')">
+                                        </div>
+                                    </div>
+
+
+                                    <!--<div class="form-group">
+													<div class="checkbox checkbox-primary pr-10 pull-left">
+														<input id="checkbox_2" required="" type="checkbox">
+														<label for="checkbox_2"> Keep me logged in</label>
+													</div>
+													<div class="clearfix"></div>
+												</div>-->
+                                    <div class="form-group text-center">
+                                        <button type="submit" class="btn btn-success  btn-rounded">sign up</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

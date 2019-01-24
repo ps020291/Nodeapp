@@ -1,0 +1,404 @@
+{{> header }} {{> left }}
+<!-- Main Content -->
+<div class="page-wrapper">
+    <!-- select2 CSS -->
+    <div class="container-fluid">
+
+        <!-- Title -->
+        <div class="row heading-bg">
+            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                <!-- <h5 class="txt-dark">Login Users</h5> -->
+            </div>
+            <!-- Breadcrumb -->
+            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="/">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/product">
+                            <span>Product</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <span>List</span>
+                    </li>
+                </ol>
+            </div>
+            <!-- /Breadcrumb -->
+        </div>
+        <!-- /Title -->
+        {{#if errors}} {{#each errors}}
+        <div class="alert alert-danger" id="errmsg">{{msg}}</div>
+        {{/each}} {{/if}} {{#if success_msg}}
+        <div class="alert alert-success" id="sucmsg">{{success_msg}}</div>
+        {{/if}} {{#if error_msg}}
+        <div class="alert alert-danger" id="sucmsg">{{error_msg}}</div>
+        {{/if}}
+        <!-- Row -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default card-view">
+                    <div class="panel-heading">
+                        <div class="pull-left">
+                            <h6 class="panel-title txt-dark">Product</h6>
+                        </div>
+                        <div class="right" style="float:right">
+                            <button class="btn btn-info btn-anim" id='viewbtn' style="display: none" onclick="$('#adminbtn').show();$('#subadminbtn').show();$('#viewbtn').hide();$('#admin_add').hide();$('#listing').show();">
+                                <i class="fa fa-eye"></i>
+                                <span class="btn-text">View List</span>
+                            </button>
+                            <a href="/product/add" class="btn btn-warning btn-anim" id='subadminbtn'>
+                                <i class="fa fa-plus"></i>
+                                <span class="btn-text">Add Product</span>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row searchfrm">
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <div class="contact-list">
+                                <div class="row">
+                                    <aside class="col-lg-2 col-md-4 pr-0">
+                                        <div class="mt-20 mb-20 ml-15 mr-15">
+                                            Filters &nbsp;&nbsp;
+                                            <i class="glyphicon glyphicon-filter"></i> &nbsp;
+                                            <label class="label label-info">{{data.totalcount}} Total Records </label>
+                                        </div>
+                                        <ul class="inbox-nav mb-30">
+                                            <form method="get" autocomplete="off">
+                                                <li class="mb-10">
+                                                    <div class="field">
+                                                        <label for="label-name" class="field__label">Search Product, SKU</label>
+                                                        <input type="text" name="key" value="{{queryString.key}}" class="field__input one-column-form__input--text form-control" placeholder="Search Product, SKU"
+                                                            value="">
+                                                        <input type="hidden" name="sort" value="">
+                                                    </div>
+                                                </li>
+                                                <li class="mb-10">
+                                                    <div class="field">
+                                                        <label for="label-name" class="field__label">From</label>
+                                                        <input type="text" name="from" value="{{queryString.from}}" class="field__input one-column-form__input--text form-control datepicker" placeholder="YYYY-MM-DD"
+                                                            value="">
+                                                    </div>
+                                                </li>
+                                                <li class="mb-10">
+                                                    <div class="field">
+                                                        <label for="label-name" class="field__label">To</label>
+                                                        <input type="text" name="to" value="{{queryString.to}}" id="datepicker1" class="field__input one-column-form__input--text form-control datepicker"
+                                                            placeholder="YYYY-MM-DD" value="">
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="field">
+                                                        <label for="label-name" class="field__label">Status</label>
+                                                        <select name="status" class="field__input one-column-form__input--text form-control">
+                                                            <option value="">Select Status</option>
+                                                            <option value="Active" {{#if_equal queryString.status 'Active' }} selected {{/if_equal}} >Active</option>
+                                                            <option value="Inactive" {{#if_equal queryString.status 'Inactive' }} selected {{/if_equal}}>Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="btn-group mt-15 mr-10">
+                                                        <button type="submit" class="btn btn-primary btn-xs">Apply Filter&nbsp;
+                                                            <i class="glyphicon glyphicon-search"></i>
+                                                        </button>
+                                                         
+                                                    </div>
+                                                    <div class="btn-group mt-15 mr-10">
+                                                        <button type="button" class="btn btn-default btn-xs" onclick="window.location.href='/product'" >Reset&nbsp;
+                                                            <i class="glyphicon glyphicon-remove"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </form>
+                                        </ul>
+                                    </aside>
+                                    <aside class="col-lg-10 col-md-4 pr-0">
+                                        <div class="table-wrap" id="customer_list">
+                                            <div class="panel pl-10">
+                                                <div class="panel-wrapper collapse in">
+                                                    <div class="panel-body  pa-0">
+                                                        <div class="table-wrap" id="listing">
+                                                            <!--<div class="table-responsive">-->
+                                                            <table id="datable_1" class="table table-hover display  pb-30">
+                                                                <thead>
+
+                                                                    <!-- <tr class="footable-filtering"><th colspan="6"><form class="form-inline" method="get"><input type="text" name="key" value="" class="form-control" placeholder="Search Name, Email, Mobile"> 
+														<select class="form-control" name="role"><option value="">Select Role</option><option value="Admin"  >Admin</option><option value="Subadmin" >Sub-Admin</option><option value="Staff" >Staff</option>
+														
+														</select>
+														<button type="submit" class="btn btn-primary dropdown-toggle">Search&nbsp;<span class="glyphicon glyphicon-search"></span></button>&nbsp;<a href="http://dev.brandncodes.com/nationalduniya/dashboard/adminusers" class="btn btn-default dropdown-toggle">Reset&nbsp;<span class="glyphicon glyphicon-remove"></span></a></button></form></th>
+													</tr> -->
+                                                                    <tr>
+                                                                        <th>SKU</th>
+                                                                        <th>Product</th>
+                                                                        <th>Is Featured</th>
+                                                                        <th>Price</th>
+                                                                        <th>Offer Price</th>
+                                                                        <th>Image</th>
+                                                                        <th>Status</th>
+                                                                        <th>Added At</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    {{#each data}} {{#each this }}
+                                                                    <tr>
+                                                                        <td>{{sku}}</td>
+                                                                        <td>{{title}}</td>
+                                                                        <td>{{is_featured}}</td>
+                                                                        <td>{{price}}</td>
+                                                                        <td>{{offer_price}}</td>
+                                                                        <td>
+                                                                            <img src="../images/products/{{image.1.name}}" width="50">
+                                                                        </td>
+                                                                        <td>{{#if_equal status 'Active' }}
+                                                                            <label class="label label-info">Active</label>
+                                                                            {{else}}
+                                                                            <label class="label label-danger">Inactive</label>
+                                                                            {{/if_equal}}
+                                                                        </td>
+                                                                        <td>{{formatDate created_at year="numeric" month="numeric"
+                                                                            day="numeric" }}</td>
+                                                                        <td>
+                                                                            <div class="dropdown">
+                                                                                <i aria-expanded="false" data-toggle="dropdown" class="glyphicon glyphicon-align-justify dropdown-toggle "></i>
+                                                                                <ul role="menu" data-dropdown-in="bounceIn" data-dropdown-out="bounceOut" class="dropdown-menu">
+                                                                                    <li>
+                                                                                        <a href="/product/editproduct/{{_id}}">
+                                                                                            <i class="zmdi zmdi-edit text-warning"></i>
+                                                                                            <span>Edit</span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="/product/delete/{{_id}}" onclick="return confirm('Are you sure?')">
+                                                                                            <i class="fa fa-trash text-danger"></i>
+                                                                                            <span>Delete</span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    {{/each}} {{/each}}
+                                                                </tbody>
+
+
+                                                                </tbody>
+                                                            </table>
+                                                            <ul class="pagination pagination-sm ">
+                                                            {{#iff data.totalpages '>' 1 }}
+                                                                {{#paginate pagination type="middle" }}
+                                                                <li {{#if active}}class="active" {{/if}}>
+                                                                    <a href="?page={{n}}">{{n}}</a>
+                                                                </li>
+                                                                {{/paginate}}
+                                                            {{/iff}}
+                                                            </ul>
+                                                            <!--</div>-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Row -->
+                                                <div class="panel-body" style="display: none" id="admin_add">
+                                                    <div class="form-wrap">
+                                                        <h6 class="txt-dark capitalize-font">
+                                                            <i class="zmdi zmdi-account mr-10"></i>Product's Info</h6>
+                                                        <hr class="light-grey-hr" />
+                                                        <form method="post" data-toggle="validator" role="form" action="/product/saveproduct" enctype="multipart/form-data">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Product Name</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="icon-user"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control" name="title" id="title" placeholder="Product Name" required>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">SKU</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="icon-user"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control" name="sku" id="sku" placeholder="SKU" required>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Is Featured</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-user"></i>
+                                                                            </div>
+                                                                            <select class="form-control" name="is_featured" id="is_featured">
+                                                                                <option value="1">Yes</option>
+                                                                                <option value="0">No</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">URL</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-envelope"></i>
+                                                                            </div>
+                                                                            <input type="url" class="form-control" name="url" id="url" placeholder="URL">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Brand</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-user"></i>
+                                                                            </div>
+                                                                            <select class="form-control" name="brand_id" id="brand_id">
+                                                                                <option value="1">Yes</option>
+                                                                                <option value="0">No</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">product</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-envelope"></i>
+                                                                            </div>
+                                                                            <input type="url" class="form-control" name="category_id" id="category_id" placeholder="URL">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Price</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-lock"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control" name="price" id="price" placeholder="Price">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Offer Price</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-lock"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control" name="offer_price" id="offer_price" placeholder="Offer Price">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Meta Title</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-lock"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control" name="meta_title" id="meta_title" placeholder="Meta Title">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Meta Keyword</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-phone"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control" name="meta_keyword" id="meta_keyword" placeholder="Meta Keyword">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Meta Description</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-phone"></i>
+                                                                            </div>
+                                                                            <input type="text" class="form-control" name="meta_description" id="meta_description" placeholder="Meta Description">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Image</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-picture"></i>
+                                                                            </div>
+                                                                            <input type="file" class="form-control" name="image" id="image">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label mb-10" for="exampleInputEmail_2">Status</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-addon">
+                                                                                <i class="glyphicon glyphicon-envelope"></i>
+                                                                            </div>
+                                                                            <select name="status" id="status" class="form-control">
+                                                                                <option value="Active">Active</option>
+                                                                                <option value="Inactive">Inactive</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group text-center">
+                                                                <button type="submit" class="btn btn-success  btn-rounded">Save</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- /Row -->
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Row -->
+                    </aside>
+                </div>
+            </div>
+            {{> footer }}
