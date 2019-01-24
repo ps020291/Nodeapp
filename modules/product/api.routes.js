@@ -28,7 +28,7 @@ router.get("/", ensureAuthenticate, (req, res) => {
 
 
 
-router.get("/add",  (req, res) => {
+router.get("/add", ensureAuthenticate, (req, res) => {
     var categoryAr = [];
     var brandAr = [];
     var data = [];
@@ -118,7 +118,7 @@ router.post("/updateproduct",ensureAuthenticate, function(req, res){
 });
 
 
-router.post("/saveproduct",  (req, res) =>{
+router.post("/saveproduct", ensureAuthenticate, (req, res) =>{
     upload(req, res, err =>{
         if(err) req.flash("error_msg", "Image Could not be Uploaded."+err); res.redirect("/product");
         console.log(res.req.files);

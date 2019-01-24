@@ -88,15 +88,15 @@ function listProduct(req, res) {
 
 
 function saveProduct(req, response) {
-    var image = {};
+    var name = {};
     var img = [];
     var req = req.body;
     var file = req;
     var i=0;
     for (const iterator of req.image) {
         // img.name[i] = iterator.filename;
-        image.name = iterator.filename;
-        img.push(name = iterator.filename); 
+        // image.name = iterator.filename;
+        img.push({name : iterator.filename}); 
     }
     console.log(img);
     req.image  = img;
