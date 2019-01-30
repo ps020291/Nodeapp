@@ -19,6 +19,16 @@ var upload = multer({storage: storage}).single('image');
 module.exports = router;
 
 
+router.post("/login", function(req, res){
+    // res.send(req.body);
+    ctrl.ApiLogin(req.body, response=> {
+        console.log(response);
+        res.send(response);
+        // response.pagename = "customer";
+        // res.render("customers", {data:response,  queryString :req.query,  pagination : {page : response.currentpage, pageCount :response.totalpages }});
+    });
+})
+
 router.get("/", ensureAuthenticate, (req, res) => {
     ctrl.listCustomers(req, response=> {
         console.log(response);

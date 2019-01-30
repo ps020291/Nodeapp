@@ -17,7 +17,8 @@ var upload = multer({storage: storage});
      saveCustomer : saveCustomer,
      editCustomer : editCustomer,
      DelCustomer: DelCustomer,
-     updateCustomer : updateCustomer
+     updateCustomer : updateCustomer,
+     ApiLogin : ApiLogin
  }
 
  function listCustomers(req, res) {
@@ -83,6 +84,40 @@ var upload = multer({storage: storage});
 //     });
 //  }
 
+function ApiLogin(req, res) {
+    var req = req;
+    var customer = new Customer(req);
+    Customer.findOne({email : req.email}, (err, cust)=>{
+        if(err) return res.status(200).send(err);
+        if(cust==null){
+            return res({msg : "Sorry! Customer Doesn't Exist", status : false});
+        }
+        if(cust){
+            // return res("here");
+            Customer.comparePassword(req.password, cust.password, function(err, isMatch){
+                if(err) return res({msg:" Error in Password", status: false});
+                if(isMatch){
+                    if(cust.status=="Active")
+                    {
+                        userdata = {
+                            "_id" : customer._id,
+                            "name" : customer.firstName+" "+customer.lastName,
+                            "email" : customer.email,
+                            "image" : customer.image
+                        }
+                        console.log("match");
+                        return res({msg : "Congratulation! Logging In", status : true, customer:userdata});
+                        // return done(null, user);
+                    }else{
+                        return res({msg : "Sorry! Account is Deactivated", status : false});
+                    }
+                }else{
+                    return res({msg : "Invalid Email or Password", status : false});    
+                }
+            }) 
+        }
+    });
+}
 
  function saveCustomer(req, response){
     var req = req.body;
@@ -112,6 +147,8 @@ var upload = multer({storage: storage});
         }
     }) 
 }
+
+
 
 
 function updateCustomer(req, response){

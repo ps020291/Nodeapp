@@ -13,12 +13,12 @@ var session = require("express-session");
 var passport = require("passport");
 var localStrategy = require("passport-local").Strategy;
 var mongoDBConnect = require("./db").mongooseConnect;
-
+var cors = require('cors');
 
 
 // Initializing the App 
 var app = express();
-
+app.use(cors({origin:["http://localhost:4200"],credentials: true}));
 // Setting up the Nunjucks Template Engines 
 // nunjucks.configure("views",{
 // 	autoescape : true,

@@ -1,4 +1,5 @@
 var express = require("express");
+var cors = require('cors');
 var loginRoutes = require("./login/api.routes");
 var registerRoutes = require("./register/api.routes");
 var dashboardRoutes = require("./dashboard/api.routes");
@@ -15,8 +16,15 @@ var logoutRoutes = require("./logout/api.routes");
 
 
 
+
 module.exports = {
     mountApiRoutes : mountApiRoutes,
+    corsRequest: corsRequest 
+}
+
+function corsRequest() {
+    expressApp.use(cors({origin:["http://localhost:4200"],credentials: true})); 
+    // cross origin
 }
 
 function mountApiRoutes(expressApp){
@@ -35,6 +43,9 @@ function mountApiRoutes(expressApp){
     app.use("/promotion", promotionRoutes);
     app.use("/product", productRoutes);
     app.use("/logout", logoutRoutes);
+    
+    app.use("/api", customerRoutes);
+
     expressApp.use("/", app);
 }
 function ensureAuthenticate(req, res, next){
