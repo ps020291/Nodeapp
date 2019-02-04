@@ -1,6 +1,9 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var bcrypt = require("bcryptjs");
+var jwt = require('jsonwebtoken');
+var SECRET = "Nodeapp";
+
 var customerSchema = new Schema({
     firstName : String,
     lastName : String,
@@ -28,4 +31,11 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
         if(err) throw err;
         callback(null, isMatch);
     })
+}
+
+module.exports.SignToken = function(response){
+    var token = jwt.sign({
+        data: response
+    }, SECRET , { expiresIn: '1h' });
+    return token;
 }

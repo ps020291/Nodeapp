@@ -18,7 +18,8 @@ var upload = multer({storage: storage});
      editCustomer : editCustomer,
      DelCustomer: DelCustomer,
      updateCustomer : updateCustomer,
-     ApiLogin : ApiLogin
+     ApiLogin : ApiLogin,
+     ValidateToken : ValidateToken
  }
 
  function listCustomers(req, res) {
@@ -83,41 +84,6 @@ var upload = multer({storage: storage});
 //         }
 //     });
 //  }
-
-function ApiLogin(req, res) {
-    var req = req;
-    var customer = new Customer(req);
-    Customer.findOne({email : req.email}, (err, cust)=>{
-        if(err) return res.status(200).send(err);
-        if(cust==null){
-            return res({msg : "Sorry! Customer Doesn't Exist", status : false});
-        }
-        if(cust){
-            // return res("here");
-            Customer.comparePassword(req.password, cust.password, function(err, isMatch){
-                if(err) return res({msg:" Error in Password", status: false});
-                if(isMatch){
-                    if(cust.status=="Active")
-                    {
-                        userdata = {
-                            "_id" : customer._id,
-                            "name" : customer.firstName+" "+customer.lastName,
-                            "email" : customer.email,
-                            "image" : customer.image
-                        }
-                        console.log("match");
-                        return res({msg : "Congratulation! Logging In", status : true, customer:userdata});
-                        // return done(null, user);
-                    }else{
-                        return res({msg : "Sorry! Account is Deactivated", status : false});
-                    }
-                }else{
-                    return res({msg : "Invalid Email or Password", status : false});    
-                }
-            }) 
-        }
-    });
-}
 
  function saveCustomer(req, response){
     var req = req.body;
@@ -214,4 +180,58 @@ function DelCustomer(id, res){
         if (err) return response.status(200).send(err);
         res({msg : "Customer Successfully Deleted.", status : true});
     }) 
+}
+
+/***************************************************************/
+// API Functions
+/***************************************************************/
+
+function ApiLogin(req, res) {
+    var req = req;
+    console.log(req);
+    var customer = new Customer(req);
+    Customer.findOne({email : req.email}, (err, cust)=>{
+        if(err) return res.status(200).send(err);
+        if(cust==null){
+            return res({msg : "Sorry! Customer Doesn't Exist", status : false});
+        }
+        if(cust){
+            // return res("here");
+            Customer.comparePassword(req.password, cust.password, function(err, isMatch){
+                if(err) return res({msg:" Error in Password", status: false});
+                if(isMatch){
+                    if(cust.status=="Active")
+                    {
+                        userdata = {
+                            "_id" : cust._id,
+                            "name" : cust.firstName+" "+cust.lastName,
+                            "email" : cust.email,
+                            "image" : cust.image
+                        }
+                        console.log("match");
+                        var token = Customer.SignToken(userdata);
+                        return res({msg : "Congratulation! Logging In", status : true, data:userdata, token : token});
+                        // return done(null, user);
+                    }else{
+                        return res({msg : "Sorry! Account is Deactivated", status : false});
+                    }
+                }else{
+                    return res({msg : "Invalid Email or Password", status : false});    
+                }
+            }) 
+        }
+    });
+}
+
+
+function ValidateToken(id, res){
+    Customer.findById(id,{password : 0}, (err, user)=>{
+        if (err) throw err;;
+        if(user!=null)
+        {   
+            res({data : user,  status:true});
+        }else{
+            res({data : '', status:false});  
+        }
+    });
 }
