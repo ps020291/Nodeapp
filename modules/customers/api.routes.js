@@ -5,6 +5,8 @@ var multer = require('multer');
 var path = require('path');
 var jwt = require('jsonwebtoken');
 var SECRET = "Nodeapp";
+var decodedToken = '';
+
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -180,29 +182,46 @@ router.post("/login", function (req, res) {
     });
 })
 
-router.get("/checkLogin", function (req, res) {
+
+router.get("/checkLogin", verifyToken, function (req, res) {
     var token = req.headers['x-access-token'];
     console.log(token);
     if (!token) {
         return res.status(401).send({ auth: false, message: 'No token provided.' });
     }
-    jwt.verify(token, SECRET, (err, decoded) => {
-        console.log(decoded);
-        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-        ctrl.ValidateToken(decoded.data._id, (user) => {
-            if (!user) { 
-                return res.status(404).send({ auth: false, message: 'No Customer Found' })
-            } 
-            else {
-                return res.status(200).send(decoded);
-            }
-
-        })
+    ctrl.ValidateToken(decodedToken.data._id, (user) => {
+        if (!user) { 
+            return res.status(404).send({ auth: false, message: 'No Customer Found' })
+        } 
+        else {
+            return res.status(200).send(decodedToken);
+        }
 
     })
 })
 
+router.get("/list",  (req, res) => {
+    ctrl.listCustomers(req, response => {
+        console.log(response);
+        // response.pagename = "customer";
+        res.status(200).send(response);
+    });
+    // res.render("customers", {message:"Welconme"});
+    // res.send("Dashboard Page");
+});
 
+function verifyToken(req, res, next) {
+    var token = req.headers['x-access-token'];
+    jwt.verify(token, SECRET, (err, decoded) => {
+        console.log(decoded);
+        if (err){ 
+            return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+        }else{
+            decodedToken = decoded;
+            next();
+        }
+    })
+}
 
 function ensureAuthenticate(req, res, next) {
     if (req.isAuthenticated()) {

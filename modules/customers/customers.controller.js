@@ -193,7 +193,7 @@ function ApiLogin(req, res) {
     Customer.findOne({email : req.email}, (err, cust)=>{
         if(err) return res.status(200).send(err);
         if(cust==null){
-            return res({msg : "Sorry! Customer Doesn't Exist", status : false});
+            return res.status(404).send({ auth: false, message: 'User not Found' });
         }
         if(cust){
             // return res("here");
