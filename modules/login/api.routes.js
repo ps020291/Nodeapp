@@ -3,10 +3,25 @@ var router = express.Router();
 var ctrl = require("./login.controller");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
+const say = require('say')
+// say.setPlatform(say.platforms.WIN32);
 module.exports = router;
 
 
 router.get("/", ensureAuthenticate, (req, res) => {
+    
+    // say.getInstalledVoices((err, data)=>{
+    //     if(err) console.log(err);
+    //     console.log(data)
+    // })
+    // say.speak("What's up, dog?", 'Good News', 1.0, (err) => {
+    //     if (err) {
+    //       return console.error(err)
+    //     }
+       
+    //     console.log('Text has been spoken.')
+    //   });
+
     // res.send("here");
     var data = [];
     data.pagename = "login";

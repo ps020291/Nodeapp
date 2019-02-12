@@ -19,7 +19,9 @@ var upload = multer({storage: storage});
      DelCustomer: DelCustomer,
      updateCustomer : updateCustomer,
      ApiLogin : ApiLogin,
-     ValidateToken : ValidateToken
+     ValidateToken : ValidateToken,
+     Profile : Profile,
+     updateProfile : updateProfile
  }
 
  function listCustomers(req, res) {
@@ -155,7 +157,7 @@ function updateCustomer(req, response){
     }else{
         Customer.updateOne(myquery, newquery, function(err, res){
             if(err) return response.status(200).send(err);
-            console.log("Customer Successfully Updated");
+            // console.log("Customer Successfully Updated");
             response({msg : "Customer Successfully Updated.", status : true});
         });
     }
@@ -193,12 +195,12 @@ function ApiLogin(req, res) {
     Customer.findOne({email : req.email}, (err, cust)=>{
         if(err) return res.status(200).send(err);
         if(cust==null){
-            return res.status(404).send({ auth: false, message: 'User not Found' });
+            return res({ status: false, msg: 'Sorry! User does not Exist' });
         }
         if(cust){
             // return res("here");
             Customer.comparePassword(req.password, cust.password, function(err, isMatch){
-                if(err) return res({msg:" Error in Password", status: false});
+                if(err) return res({msg:" Sorry! Invalid Login Credentials", status: false});
                 if(isMatch){
                     if(cust.status=="Active")
                     {
@@ -216,7 +218,7 @@ function ApiLogin(req, res) {
                         return res({msg : "Sorry! Account is Deactivated", status : false});
                     }
                 }else{
-                    return res({msg : "Invalid Email or Password", status : false});    
+                    return res({msg : "Sorry! Invalid Email or Password", status : false});    
                 }
             }) 
         }
@@ -234,4 +236,37 @@ function ValidateToken(id, res){
             res({data : '', status:false});  
         }
     });
+}
+
+function Profile(id, res){
+    Customer.findById(id,{password : 0}, (err, user)=>{
+        if (err) throw err;;
+        if(user!=null)
+        {   
+            res({data : user,  status:true});
+        }else{
+            res({data : '', status:false});  
+        }
+    });
+}
+
+function updateProfile(req, res) {
+    console.log(req);
+    var request = {};
+    request.firstName = req.firstName;
+    request.lastName = req.lastName;
+    request.mobile = req.mobile;
+    request.address = [{address1 : req.address1, address2 : req.address2, city : req.city}];
+    var myquery = { _id: req.customer_id };
+    console.log("REQ ", req);
+    var newquery = { $set : request};
+
+    var customer = new Customer(request);
+
+    Customer.updateOne(myquery, newquery, function(err, response){
+        if(err) return res.status(200).send(err);
+        res({msg : "Customer Successfully Updated.", status : true, data : ''});
+    });
+
+    
 }

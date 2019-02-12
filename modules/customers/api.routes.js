@@ -138,7 +138,11 @@ router.post("/updatecustomer", ensureAuthenticate, function (req, res) {
     //     console.log("Validation Error ");
     // }else{
     upload(req, res, err => {
-        if (err) res({ msg: "Image Could not be Uploaded." + err, status: false });
+        if (err) {
+            // res({ msg: "Image Could not be Uploaded." + err, status: false });
+            req.flash("error_msg", "Sorry! Image Could not be Uploaded");
+            res.redirect("/customers");
+    }
         // console.log("REQ  ", req);
         if (req.file == undefined) {
             req.body.image = '';
@@ -153,7 +157,7 @@ router.post("/updatecustomer", ensureAuthenticate, function (req, res) {
                 req.flash("error_msg", "Sorry! Email already exist, Please try with another email");
                 res.redirect("/customers");
             } else {
-                req.flash("success_msg", "Congratulations! You are Successfully Registed");
+                req.flash("success_msg", "Congratulations! You are Successfully Updated");
                 res.redirect("/customers");
             }
         });
@@ -200,8 +204,8 @@ router.get("/checkLogin", verifyToken, function (req, res) {
     })
 })
 
-router.get("/list",  (req, res) => {
-    ctrl.listCustomers(req, response => {
+router.get("/profile", verifyToken, (req, res) => {
+    ctrl.Profile(decodedToken.data._id, response => {
         console.log(response);
         // response.pagename = "customer";
         res.status(200).send(response);
@@ -210,8 +214,22 @@ router.get("/list",  (req, res) => {
     // res.send("Dashboard Page");
 });
 
+router.post("/updateprofile", verifyToken, function (req, res) {
+    var data = [];
+    console.log(req)
+    req.body.customer_id = decodedToken.data._id;
+    ctrl.updateProfile(req.body, response => {
+        console.log(response);
+        res.send(response);
+    });
+})
+
+
 function verifyToken(req, res, next) {
     var token = req.headers['x-access-token'];
+    if (!token) {
+        return res.status(401).send({ auth: false, message: 'No token provided.' });
+    }
     jwt.verify(token, SECRET, (err, decoded) => {
         console.log(decoded);
         if (err){ 
