@@ -21,7 +21,9 @@ var upload = multer({storage: storage});
      ApiLogin : ApiLogin,
      ValidateToken : ValidateToken,
      Profile : Profile,
-     updateProfile : updateProfile
+     updateProfile : updateProfile,
+     SignUp : SignUp,
+     UpdateImage : UpdateImage
  }
 
  function listCustomers(req, res) {
@@ -90,6 +92,11 @@ var upload = multer({storage: storage});
  function saveCustomer(req, response){
     var req = req.body;
     var file = req;
+    req.address = [{
+        address1 : req.address1,
+        address2 : req.address2,
+        city : req.city
+    }];
     req.added_at = new Date();
     var customer = new Customer(req);
     Customer.findOne({email : req.email}, (err, res)=>{
@@ -126,6 +133,11 @@ function updateCustomer(req, response){
     request.lastName = req.lastName;
     request.mobile = req.mobile;
     request.status = req.status;
+    request.address = [{
+        address1 : req.address1,
+        address2 : req.address2,
+        city : req.city
+    }]
     var myquery = { _id: req.id };
     console.log(req);
     if(req.password!="")
@@ -134,9 +146,9 @@ function updateCustomer(req, response){
     }else{
         console.log("REQ ", req);
         if(req.image!=""){
-            var newquery = { $set : {firstName: req.firstName, lastName: req.lastName, mobile: req.mobile, status: req.status, image: req.image}};
+            var newquery = { $set : {firstName: req.firstName, lastName: req.lastName, mobile: req.mobile, status: req.status, image: req.image, address : request.address}};
         }else{
-            var newquery = { $set : {firstName: req.firstName, lastName: req.lastName, mobile: req.mobile, status: req.status}};
+            var newquery = { $set : {firstName: req.firstName, lastName: req.lastName, mobile: req.mobile, status: req.status, address:request.address}};
         }
     }
     
@@ -269,4 +281,48 @@ function updateProfile(req, res) {
     });
 
     
+}
+
+function SignUp(req, response){
+    req.mobile = '';
+    req.image = '';
+    req.address = [{
+        address1  : '',
+        address2  : '',
+        city  : ''
+    }];
+    req.added_at = new Date();
+    var customer = new Customer(req);
+    Customer.findOne({email : req.email}, (err, res)=>{
+        if (err) return response.status(200).send(err);
+        if(res==null)
+        {
+            // console.log("Old Password : " + req.password);
+            bcrypt.genSalt(10, function(err, salt) {
+                bcrypt.hash(req.password, salt, function(err, hash) {
+                    // Store hash in your password DB.
+                    customer.password = hash;
+                    // console.log("New Password : " + customer);
+                    
+                    customer.save().then(function(data){
+                        // console.log(data);
+                        response({msg : "Customer Successfully Registered.", status : true});
+                    })
+                });
+            });
+            // user.Collection.User.insert(body, (err, doc))
+        }else{
+            response({msg : "Sorry! Email Already Exist, Please Login.", status : false});
+        }
+    }) 
+}
+
+
+function UpdateImage(req, res) {
+    req.image = req.body.image;
+    id = req.body._id;
+    Customer.updateOne({_id : id}, {$set : {image : req.image} }, function(err, response){
+        if(err) return res.status(200).send(err);
+        res({msg : "Profile Image Successfully Updated.", status : true, data : 'http://localhost:3000/images/'+req.image});
+    });
 }

@@ -89,7 +89,10 @@ router.post("/savecustomer", ensureAuthenticate, function (req, res) {
     //     console.log("Validation Error ");
     // }else{
     upload(req, res, err => {
-        if (err) res({ msg: "Image Could not be Uploaded." + err, status: false });
+        if (err){ 
+            req.flash("error_msg", "Image Could not be Uploaded." + err);
+                res.redirect("/customers");
+        }   
         // console.log("REQ  ", req.file.filename);
         req.body.image = req.file.filename;
         ctrl.saveCustomer(req, response => {
@@ -202,7 +205,9 @@ router.get("/checkLogin", verifyToken, function (req, res) {
         }
 
     })
-})
+});
+
+
 
 router.get("/profile", verifyToken, (req, res) => {
     ctrl.Profile(decodedToken.data._id, response => {
@@ -221,6 +226,34 @@ router.post("/updateprofile", verifyToken, function (req, res) {
     ctrl.updateProfile(req.body, response => {
         console.log(response);
         res.send(response);
+    });
+})
+
+
+router.post("/signup", function (req, res) {
+    var data = [];
+    ctrl.SignUp(req.body, response => {
+        console.log(response);
+        res.send(response);
+    });
+})
+
+
+router.post("/image-upload", verifyToken, function(req,  res){
+    upload(req, res, err => {
+        if (err) {
+            req.status(500).send({auth:false, msg : "Sorry! Image could not be Uploaded"});
+        }
+        if (req.file == undefined) {
+            req.body.image = '';
+        } else {
+            req.body.image = req.file.filename;
+        }
+        console.log(req.body.image);
+        req.body._id = decodedToken.data._id;
+        ctrl.UpdateImage(req, response=>{
+            res.send(response);
+        })
     });
 })
 

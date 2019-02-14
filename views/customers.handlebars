@@ -134,7 +134,7 @@
 													<td>{{email}}</td>
 													<td>{{mobile}}</td>
 
-													<td><img src="../images/{{image}}" width="50">
+													<td>{{#if_not_equal image ''}}<img src="../images/{{image}}" width="50">{{/if_not_equal}}
 													</td>
 													<td>{{#if_equal status 'Active' }}
 														<label class="label label-info">Active</label>
@@ -178,9 +178,9 @@
 						<!-- Row -->
 					<div class="panel-body" style="display: none" id="admin_add">
 						<div class="form-wrap">
+							<form method="post"  data-toggle="validator" role="form" action="/customers/savecustomer" enctype="multipart/form-data" >
 							<h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-account mr-10"></i>Person's Info</h6>
 							<hr class="light-grey-hr"/>
-							<form method="post"  data-toggle="validator" role="form" action="/customers/savecustomer" enctype="multipart/form-data" >
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -257,8 +257,39 @@
 									</div>
 									 
 								</div>
-								 
-								
+								<h6 class="txt-dark capitalize-font"><i class="fa fa-map-marker mr-10"></i>Address Info</h6>
+								<hr class="light-grey-hr"/> 
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label mb-10" for="exampleInputEmail_2">Address1</label>
+											<div class="input-group">
+												<div class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></div>
+												<input type="text" class="form-control" name="address1" id="address1" required >
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label mb-10" for="exampleInputEmail_2">Address2</label>
+											<div class="input-group">
+												<div class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></div>
+												<input type="text" class="form-control" name="address2" id="address2" required >
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="control-label mb-10" for="exampleInputEmail_2">City</label>
+											<div class="input-group">
+												<div class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></div>
+												<input type="text" class="form-control" name="city" id="city" required >
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="seprator-block"></div>
 								 
 								<div class="form-group text-center">
