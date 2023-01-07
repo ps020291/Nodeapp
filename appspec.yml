@@ -5,14 +5,14 @@ files:
     destination : /home/ubuntu/nodeapp
 hooks:
   ApplicationStop:
-    - location: scripts/application_stop.sh
+    - location: application_stop.sh
       timeout: 300
       runas: ubuntu
   BeforeInstall:
-    - location: scripts/before_install.sh
+    - location: before_install.sh
       timeout:  300
       runas:  ubuntu
   ApplicationStart:
-    - location: scripts/application_start.sh
+    - location: application_start.sh
       timeout: 300
       runas:  ubuntu
