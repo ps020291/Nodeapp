@@ -1,16 +1,8 @@
 #!/bin/bash
-#download node and npm
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash. ~/.nvm/nvm.sh
-nvm install node
+# Install Node.js dependencies using npm
 
-
-
-#create our working directory if not exist
-DIR = "/home/ubuntu/nodeapp
-if [ -d "$DIR" ]; then
-  echo "${DIR} exists"
-else
-  echo "creating ${DIR}"
-  mkdir ${DIR}
-fi
+# Example command to install dependencies using npm
+# Replace "my_app_directory" with the appropriate directory where your Node.js application is located
+# cd /path/to/my_app_directory
+npm install
