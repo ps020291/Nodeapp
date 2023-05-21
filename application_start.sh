@@ -7,8 +7,6 @@ cd /home/ubuntu/nodeapp
 #[ -s  "$nvm_dir/bash_completion"  ] &&  \.  "$nvm_dir/bash_completion"
 
 npm install
-#pm2 start npm --name="nodeapp"
-pm2 start server.js
 
 pm2 start server.js --name nodeapp
 
