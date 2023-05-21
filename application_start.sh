@@ -10,4 +10,17 @@ npm install
 #pm2 start npm --name="nodeapp"
 pm2 start server.js
 
-node app.js>app.out.log. 2> app.error.log < /dev/null &
+pm2 start server.js --name nodeapp
+
+# Verify if the application has started successfully
+pm2 describe nodeapp &> /dev/null
+status=$?
+
+# Check the exit status
+if [ $status -eq 0 ]; then
+    echo "Application started successfully."
+    exit 0
+else
+    echo "Application could not be started."
+    exit 1
+fi

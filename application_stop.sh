@@ -1,12 +1,17 @@
 #!/bin/bash
 
-# Stop the Node.js server or application
+# Stop the Node.js application using PM2
+pm2 stop nodeapp
 
-# Example command to stop a Node.js server using PM2 process manager
-pm2 stop server
+# Verify if the application has stopped successfully
+pm2 describe nodeapp &> /dev/null
+status=$?
 
-# Example command to stop a Node.js server using npm
-# Replace "node app.js" with the appropriate command to start your Node.js application
-# Replace "my_app_directory" with the appropriate directory where your Node.js application is located
-# cd /path/to/my_app_directory
-#npm stop
+# Check the exit status
+if [ $status -eq 0 ]; then
+    echo "Application could not be stopped."
+    exit 1
+else
+    echo "Application stopped successfully."
+    exit 0
+fi
