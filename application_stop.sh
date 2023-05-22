@@ -6,7 +6,7 @@ pm2 stop nodeapp 2>&1
 # Verify if the application has stopped successfully
 pm2 describe nodeapp &> /dev/null
 status=$?
-
+echo $status
 # Check the exit status
 if [ $status -eq 0 ]; then
     echo "Application stopped successfully."
