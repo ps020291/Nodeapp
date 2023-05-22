@@ -1,5 +1,5 @@
 #!/bin/bash
-
+cd /home/ubuntu/nodeapp
 # Stop the Node.js application using PM2
 pm2 stop nodeapp 2>&1
 
