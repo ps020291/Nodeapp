@@ -113,7 +113,7 @@ var mountApiRoutes = require("./modules").mountApiRoutes;
 // BodyParse
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator({
+/*app.use(expressValidator({
 	errorFormatter: function (param, msg, value) {
 		var namespace = param.split(".")
 			, root = namespace.shift()
@@ -127,7 +127,7 @@ app.use(expressValidator({
 			value: value
 		};
 	}
-}));
+}));*/
 app.use(cookieParser());
 
 app.use("/", express.static(path.join(__dirname, "public")));
