@@ -98,7 +98,7 @@ Handlebars.registerHelper('var', function (name, value, context) {
 app.set("views", path.join(__dirname, "views"));
 app.set("images", path.join(__dirname, "public/images/"));
 
-app.engine("handlebars", exphbs.engine({
+app.engine("handlebars", exphbs({
 	defaultLayout: "layouts", layoutsDir: __dirname + '/views/layouts/',
 	partialsDir: __dirname + '/views/partials/'
 }));
